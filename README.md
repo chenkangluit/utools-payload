@@ -11,12 +11,14 @@
 ✅ 预置50+常用安全测试Payload
 
 ## 项目结构
+```
 payload/
 ├── index.html       # 主界面
 ├── preload.js       # 核心逻辑
 ├── payloads.json    # 预置Payload库
 ├── index.css        # 样式表
 └── plugin.json      # 插件配置
+```
 
 ## 数据存储
 - 预置Payload： payloads.json
