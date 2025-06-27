@@ -1,0 +1,14 @@
+{
+  "main": "index.html",
+  "preload": "preload.js",
+  "logo": "logo.png",
+  "features": [
+    {
+      "code": "payload",
+      "explain": "payload",
+      "cmds": [
+        "payload"
+      ]
+    }
+  ]
+}

